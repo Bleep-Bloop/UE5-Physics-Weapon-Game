@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "PhysicsHandlerWeapon.h"
 #include "PhysicsPuzzleGameCharacter.generated.h"
 
 class UInputComponent;
@@ -82,6 +83,10 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-
+	UPROPERTY(EditAnywhere)
+	APhysicsHandlerWeapon* PhysicsHandlerWeapon;
+	
+	void AttachWeapon(APhysicsHandlerWeapon* Weapon);
+	
 };
 

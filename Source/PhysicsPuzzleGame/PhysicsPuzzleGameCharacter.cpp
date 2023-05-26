@@ -72,6 +72,16 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 	}
 }
 
+void APhysicsPuzzleGameCharacter::AttachWeapon(APhysicsHandlerWeapon* Weapon)
+{
+	// Set Weapon
+	PhysicsHandlerWeapon = Weapon;
+
+	// Attach Weapon
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	Weapon->AttachToComponent(RootComponent, AttachmentRules, FName(TEXT("GrabPoint")));
+}
+
 
 void APhysicsPuzzleGameCharacter::Move(const FInputActionValue& Value)
 {
