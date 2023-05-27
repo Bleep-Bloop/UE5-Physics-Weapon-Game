@@ -87,6 +87,10 @@ public:
 	APhysicsHandlerWeapon* PhysicsHandlerWeapon;
 	
 	void AttachWeapon(APhysicsHandlerWeapon* Weapon);
+
+	// Empty StaticMeshComponent to attach floating PhysicsHandlerWeapon to
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* EmptyAttachPoint;
 	
 };
 

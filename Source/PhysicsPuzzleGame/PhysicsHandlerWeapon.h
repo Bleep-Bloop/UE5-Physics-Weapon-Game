@@ -45,10 +45,7 @@ public:
 
 	UPROPERTY()
 	APlayerCameraManager* PlayerCamera;
-
-	UFUNCTION(BlueprintCallable)
-	void AttachWeapon(APhysicsPuzzleGameCharacter* TargetCharacter);
-
+	
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* StaticMesh;
 	

@@ -35,6 +35,10 @@ APhysicsPuzzleGameCharacter::APhysicsPuzzleGameCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	// Create a static mesh component that will remain empty to attach the weapon too (workaround while no pistol animations)
+	EmptyAttachPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gravity Gun Attach Point"));
+	EmptyAttachPoint->SetupAttachment(FirstPersonCameraComponent);
+	
 }
 
 void APhysicsPuzzleGameCharacter::BeginPlay()
@@ -79,7 +83,9 @@ void APhysicsPuzzleGameCharacter::AttachWeapon(APhysicsHandlerWeapon* Weapon)
 
 	// Attach Weapon
 	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	Weapon->AttachToComponent(RootComponent, AttachmentRules, FName(TEXT("GrabPoint")));
+	//Weapon->AttachToComponent(RootComponent, AttachmentRules, FName(TEXT("GrabPoint")));
+	Weapon->AttachToComponent(EmptyAttachPoint, AttachmentRules); 
+	
 }
 
 

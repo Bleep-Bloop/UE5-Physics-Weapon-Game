@@ -33,6 +33,7 @@ void APhysicsHandlerWeapon::BeginPlay()
 	if(Player)
 	{
 		Player->AttachWeapon(this);
+		Player->SetHasRifle(true);
 	}
 	
 }
@@ -79,13 +80,6 @@ void APhysicsHandlerWeapon::PickupItem()
 	
 }
 
-void APhysicsHandlerWeapon::AttachWeapon(APhysicsPuzzleGameCharacter* TargetCharacter)
-{
-	if(TargetCharacter)
-	{
-		// Attach the weapon to the character
-		const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-		//AttachToComponent(TargetCharacter->GetRootComponent(), AttachmentRules, FName(TEXT("GripPoint")));
-	}
-}
+
+
 
