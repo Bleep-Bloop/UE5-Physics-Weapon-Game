@@ -48,6 +48,7 @@ void APhysicsHandlerWeapon::Tick(float DeltaTime)
 void APhysicsHandlerWeapon::PickupItem()
 {
 
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::MakeRandomColor(), "Weapon::PickupItem");
 	bPhysicsHandleActive = !bPhysicsHandleActive;
 
 	if(bPhysicsHandleActive == true)

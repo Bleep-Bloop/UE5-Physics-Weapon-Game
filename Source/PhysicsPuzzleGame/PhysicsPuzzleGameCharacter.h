@@ -40,6 +40,9 @@ class APhysicsPuzzleGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* PickupAction;
+
 	
 public:
 	APhysicsPuzzleGameCharacter();
@@ -71,6 +74,9 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	/** Called for PhysicsHanderWeapon Pickup Input */
+	void Pickup(const FInputActionValue& Value);
 
 protected:
 	// APawn interface

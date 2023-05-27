@@ -73,6 +73,9 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::Look);
+
+		//Gravity Gun Use
+		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::Pickup);
 	}
 }
 
@@ -112,6 +115,15 @@ void APhysicsPuzzleGameCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void APhysicsPuzzleGameCharacter::Pickup(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::MakeRandomColor(), "Character::Pickup");
+	if(PhysicsHandlerWeapon)
+	{
+		PhysicsHandlerWeapon->PickupItem();
 	}
 }
 
