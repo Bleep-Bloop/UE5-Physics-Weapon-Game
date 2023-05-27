@@ -15,18 +15,16 @@ APhysicsHandlerWeapon::APhysicsHandlerWeapon()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("Weapon Static Mesh");
 	if(StaticMesh)
 		RootComponent = StaticMesh;
-
+	
 }
 
 // Called when the game starts or when spawned
 void APhysicsHandlerWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-
-	bPhysicsHandleActive = false;
 	
 	PlayerCamera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-
+	
 	// Temporary 
 	// Attach weapon to character on start
 	APhysicsPuzzleGameCharacter* Player = Cast<APhysicsPuzzleGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
@@ -42,45 +40,9 @@ void APhysicsHandlerWeapon::BeginPlay()
 void APhysicsHandlerWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
-void APhysicsHandlerWeapon::PickupItem()
+void APhysicsHandlerWeapon::RaycastTest()
 {
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::MakeRandomColor(), "Weapon::PickupItem");
-	bPhysicsHandleActive = !bPhysicsHandleActive;
-
-	if(bPhysicsHandleActive == true)
-	{
-		FHitResult HitResult;
-
-		FVector StartTrace = PlayerCamera->GetCameraLocation(); 
-
-		FVector ForwardVector = PlayerCamera->GetActorForwardVector();
-		FVector EndTrace = ((ForwardVector * PickupDistance) + StartTrace);
-		FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
-
-		if(GetWorld()->LineTraceSingleByObjectType(HitResult, StartTrace, EndTrace, ECC_WorldDynamic)) 
-		{
-			
-			DrawDebugLine(GetWorld(), StartTrace, HitResult.Location, FColor::MakeRandomColor(), false, 0.5f);
-
-		}
-		
-		
-	}
-	else
-	{
-		if(PhysicsHandleComponent) // Might have to check is active unsure exactly how works
-		{
-			PhysicsHandleComponent->ReleaseComponent(); // If PhysicsHandleComponent is active then drop // ToDo: What is PhysicsHandleComponent it looks like its pre much a hand it grabs a component (double check what is needed for grabbing component (ie unity rigidbody).
-		}
-		
-	}
 	
 }
-
-
-
-

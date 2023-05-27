@@ -26,27 +26,25 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
-	bool bPhysicsHandleActive;
+private:
+	
+// Components
+	UPROPERTY()
+	APlayerCameraManager* PlayerCamera;
+	
+	UPROPERTY(EditDefaultsOnly)
+	UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(EditAnywhere)
-	UPhysicsHandleComponent* PhysicsHandleComponent;
-
+// Input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess = "true"))
 	class UInputMappingContext* PickupMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess = "true"))
 	class UInputAction* PickupAction;
 
-	void PickupItem();
-
 	UPROPERTY(EditAnywhere)
-	float PickupDistance;
+	float Reach = 100.0f;
 
-	UPROPERTY()
-	APlayerCameraManager* PlayerCamera;
-	
-	UPROPERTY(EditDefaultsOnly)
-	UStaticMeshComponent* StaticMesh;
-	
+	void RaycastTest();
+
 };

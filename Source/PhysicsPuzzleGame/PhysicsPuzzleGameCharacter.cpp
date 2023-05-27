@@ -39,6 +39,7 @@ APhysicsPuzzleGameCharacter::APhysicsPuzzleGameCharacter()
 	EmptyAttachPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gravity Gun Attach Point"));
 	EmptyAttachPoint->SetupAttachment(FirstPersonCameraComponent);
 	
+	
 }
 
 void APhysicsPuzzleGameCharacter::BeginPlay()
@@ -81,6 +82,7 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void APhysicsPuzzleGameCharacter::AttachWeapon(APhysicsHandlerWeapon* Weapon)
 {
+	
 	// Set Weapon
 	PhysicsHandlerWeapon = Weapon;
 
@@ -123,7 +125,7 @@ void APhysicsPuzzleGameCharacter::Pickup(const FInputActionValue& Value)
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::MakeRandomColor(), "Character::Pickup");
 	if(PhysicsHandlerWeapon)
 	{
-		PhysicsHandlerWeapon->PickupItem();
+	//////////////////////////	PhysicsHandlerWeapon->PickupItem();
 	}
 }
 
