@@ -75,8 +75,10 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::Look);
 
-		//Gravity Gun Use
-		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::Pickup);
+		//Gravity Gun
+		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Started, this, &APhysicsPuzzleGameCharacter::PickupItem);
+		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Completed, this, &APhysicsPuzzleGameCharacter::ReleaseItem);
+		
 	}
 }
 
@@ -92,7 +94,6 @@ void APhysicsPuzzleGameCharacter::AttachWeapon(APhysicsHandlerWeapon* Weapon)
 	Weapon->AttachToComponent(EmptyAttachPoint, AttachmentRules); 
 	
 }
-
 
 void APhysicsPuzzleGameCharacter::Move(const FInputActionValue& Value)
 {
@@ -120,12 +121,20 @@ void APhysicsPuzzleGameCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void APhysicsPuzzleGameCharacter::Pickup(const FInputActionValue& Value)
+
+void APhysicsPuzzleGameCharacter::PickupItem()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::MakeRandomColor(), "Character::Pickup");
 	if(PhysicsHandlerWeapon)
 	{
-	//////////////////////////	PhysicsHandlerWeapon->PickupItem();
+		PhysicsHandlerWeapon->PickupObject();
+	}
+}
+
+void APhysicsPuzzleGameCharacter::ReleaseItem()
+{
+	if(PhysicsHandlerWeapon)
+	{
+		PhysicsHandlerWeapon->ReleaseObject();
 	}
 }
 

@@ -5,6 +5,7 @@
 
 #include "PhysicsPuzzleGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 APhysicsHandlerWeapon::APhysicsHandlerWeapon()
@@ -23,6 +24,8 @@ void APhysicsHandlerWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FindPhysicsHandle();
+	
 	PlayerCamera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
 	
 	// Temporary 
@@ -40,9 +43,86 @@ void APhysicsHandlerWeapon::BeginPlay()
 void APhysicsHandlerWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (PhysicsHandle->GrabbedComponent)
+	{
+		// Move the object that we are currently holding
+		PhysicsHandle->SetTargetLocation(GetPlayersReach());
+		
+	}
 }
 
-void APhysicsHandlerWeapon::RaycastTest()
+
+void APhysicsHandlerWeapon::PickupObject() const
 {
-	
+	const FHitResult HitResult = GetFirstPhysicsBodyInReach();
+	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
+	AActor* ActorHit = HitResult.GetActor();    
+	if (ActorHit)
+	{
+		if (!PhysicsHandle) {return;}
+		{
+			PhysicsHandle->GrabComponentAtLocationWithRotation
+			(
+				ComponentToGrab,
+				NAME_None,
+				ComponentToGrab->GetComponentLocation(),
+				ComponentToGrab->GetComponentRotation()
+			);
+
+		}
+	}
+}
+
+void APhysicsHandlerWeapon::ReleaseObject() const
+{
+	PhysicsHandle->ReleaseComponent();
+}
+
+void APhysicsHandlerWeapon::FindPhysicsHandle()
+{
+	PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Physics Handle Found!"))
+	}
+}
+
+FVector APhysicsHandlerWeapon::GetPlayersReach() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint
+	(
+		PlayerViewPointLocation,
+		PlayerViewPointRotation
+	);    return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * PickupDistance;
+}
+
+FVector APhysicsHandlerWeapon::GetPlayersWorldPosition() const
+{
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint
+	(
+		PlayerViewPointLocation,
+		PlayerViewPointRotation
+	);
+	return PlayerViewPointLocation;
+}
+
+FHitResult APhysicsHandlerWeapon::GetFirstPhysicsBodyInReach() const
+{
+	FHitResult Hit;    
+	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+	GetWorld()->LineTraceSingleByObjectType
+	(
+		Hit,
+		GetPlayersWorldPosition(),
+		GetPlayersReach(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		TraceParams
+	);
+
+	return Hit;
 }

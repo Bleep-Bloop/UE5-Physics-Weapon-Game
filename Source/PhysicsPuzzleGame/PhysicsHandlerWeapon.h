@@ -35,16 +35,28 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* StaticMesh;
 
-// Input
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess = "true"))
-	class UInputMappingContext* PickupMappingContext;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess = "true"))
-	class UInputAction* PickupAction;
-
 	UPROPERTY(EditAnywhere)
-	float Reach = 100.0f;
+	float PickupDistance = 100.0f;
 
-	void RaycastTest();
+	UPROPERTY()
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	void FindPhysicsHandle();
+	
+	// Returns player's line trace
+	FVector GetPlayersReach() const;    
+	FVector GetPlayersWorldPosition() const;
+
+	FHitResult GetFirstPhysicsBodyInReach() const;
+	
+public:
+
+	// Make friend class
+	void PickupObject() const;
+
+	void ReleaseObject() const;
+
+
+	
 
 };

@@ -74,14 +74,23 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-
-	/** Called for PhysicsHanderWeapon Pickup Input */
-	void Pickup(const FInputActionValue& Value);
-
-protected:
+	
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	// End of APawn interface
+
+	UPROPERTY(EditAnywhere)
+	APhysicsHandlerWeapon* PhysicsHandlerWeapon;
+
+	// Empty StaticMeshComponent to attach floating PhysicsHandlerWeapon to
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* EmptyAttachPoint;
+
+	// Calls attached PhysicsHandlerWeapon's Pickup 
+	void PickupItem();
+
+	// Calls attached PhysicsHandlerWeapon's Release 
+	void ReleaseItem();
 
 public:
 	/** Returns Mesh1P subobject **/
@@ -89,14 +98,8 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-	UPROPERTY(EditAnywhere)
-	APhysicsHandlerWeapon* PhysicsHandlerWeapon;
-	
 	void AttachWeapon(APhysicsHandlerWeapon* Weapon);
 
-	// Empty StaticMeshComponent to attach floating PhysicsHandlerWeapon to
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* EmptyAttachPoint;
 	
 };
 
