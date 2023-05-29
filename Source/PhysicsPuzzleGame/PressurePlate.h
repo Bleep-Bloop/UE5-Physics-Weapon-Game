@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ButtonDoor.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "PressurePlate.generated.h"
@@ -48,4 +49,15 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	bool bIsPressed;
+
+	UPROPERTY(EditAnywhere)
+	AButtonDoor* LinkedDoor;
+
+	/**
+	 * @brief This button will call LinkedDoor's OpenDoor()
+	 * @note if false will call LinkedDoor's CloseDoor();
+	 */
+	UPROPERTY(EditAnywhere)
+	bool bIsOpeningDoor;
+	
 };

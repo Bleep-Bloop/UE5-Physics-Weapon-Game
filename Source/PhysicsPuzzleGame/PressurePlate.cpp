@@ -43,6 +43,17 @@ void APressurePlate::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Button Down");
 		bIsPressed = true;
+		if(LinkedDoor)
+		{
+			if(bIsOpeningDoor)
+			{
+				LinkedDoor->OpenDoor();
+			}
+			else
+			{
+				LinkedDoor->CloseDoor();
+			}
+		}
 	}
 }
 
@@ -50,6 +61,17 @@ void APressurePlate::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Button Up");
 	bIsPressed = false;
+	if(LinkedDoor)
+	{
+		if(bIsOpeningDoor)
+		{
+			LinkedDoor->CloseDoor();
+		}
+		else
+		{
+			LinkedDoor->OpenDoor();
+		}
+	}
 }
 
 bool APressurePlate::GetIsPressed() const
