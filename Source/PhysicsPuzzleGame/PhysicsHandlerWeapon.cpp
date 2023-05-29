@@ -53,10 +53,10 @@ void APhysicsHandlerWeapon::Tick(float DeltaTime)
 }
 
 
-void APhysicsHandlerWeapon::PickupObject() const
+void APhysicsHandlerWeapon::PickupObject()
 {
 	const FHitResult HitResult = GetFirstPhysicsBodyInReach();
-	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
+	ComponentToGrab = HitResult.GetComponent();
 	AActor* ActorHit = HitResult.GetActor();    
 	if (ActorHit)
 	{
@@ -77,6 +77,17 @@ void APhysicsHandlerWeapon::PickupObject() const
 void APhysicsHandlerWeapon::ReleaseObject() const
 {
 	PhysicsHandle->ReleaseComponent();
+}
+
+void APhysicsHandlerWeapon::ThrowObject() const
+{
+
+	if(ComponentToGrab)
+	{
+		FVector ThrowVector = PlayerCamera->GetActorForwardVector() * ThrowForce;
+		PhysicsHandle->ReleaseComponent();
+		ComponentToGrab->AddImpulse(ThrowVector, NAME_None, false);
+	}
 }
 
 void APhysicsHandlerWeapon::FindPhysicsHandle()

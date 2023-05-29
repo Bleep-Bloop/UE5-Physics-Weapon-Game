@@ -78,6 +78,7 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 		//Gravity Gun
 		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Started, this, &APhysicsPuzzleGameCharacter::PickupItem);
 		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Completed, this, &APhysicsPuzzleGameCharacter::ReleaseItem);
+		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::ThrowItem);
 		
 	}
 }
@@ -135,6 +136,14 @@ void APhysicsPuzzleGameCharacter::ReleaseItem()
 	if(PhysicsHandlerWeapon)
 	{
 		PhysicsHandlerWeapon->ReleaseObject();
+	}
+}
+
+void APhysicsPuzzleGameCharacter::ThrowItem()
+{
+	if(PhysicsHandlerWeapon)
+	{
+		PhysicsHandlerWeapon->ThrowObject();
 	}
 }
 

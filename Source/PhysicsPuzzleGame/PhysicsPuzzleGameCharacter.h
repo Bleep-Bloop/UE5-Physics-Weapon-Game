@@ -40,8 +40,13 @@ class APhysicsPuzzleGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 
+	/** Gravity Gun Pickup input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* PickupAction;
+
+	/** Throw Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* ThrowAction;
 
 	
 public:
@@ -91,6 +96,9 @@ protected:
 
 	// Calls attached PhysicsHandlerWeapon's Release 
 	void ReleaseItem();
+
+	// Calls attached PhysicsHandlerWeapon's Throw
+	void ThrowItem();
 
 public:
 	/** Returns Mesh1P subobject **/

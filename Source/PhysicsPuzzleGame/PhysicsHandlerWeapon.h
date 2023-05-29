@@ -48,13 +48,21 @@ private:
 	FVector GetPlayersWorldPosition() const;
 
 	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	UPROPERTY()
+	UPrimitiveComponent* ComponentToGrab;
+
+	UPROPERTY(EditAnywhere)
+	float ThrowForce = 150000;
 	
 public:
 
 	// Make friend class
-	void PickupObject() const;
+	void PickupObject();
 
 	void ReleaseObject() const;
+
+	void ThrowObject() const;
 
 
 	
