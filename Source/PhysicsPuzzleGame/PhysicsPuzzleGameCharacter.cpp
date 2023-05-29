@@ -79,6 +79,7 @@ void APhysicsPuzzleGameCharacter::SetupPlayerInputComponent(class UInputComponen
 		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Started, this, &APhysicsPuzzleGameCharacter::PickupItem);
 		EnhancedInputComponent->BindAction(PickupAction, ETriggerEvent::Completed, this, &APhysicsPuzzleGameCharacter::ReleaseItem);
 		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::ThrowItem);
+		EnhancedInputComponent->BindAction(FreezeAction, ETriggerEvent::Triggered, this, &APhysicsPuzzleGameCharacter::FreezeItem);
 		
 	}
 }
@@ -144,6 +145,14 @@ void APhysicsPuzzleGameCharacter::ThrowItem()
 	if(PhysicsHandlerWeapon)
 	{
 		PhysicsHandlerWeapon->ThrowObject();
+	}
+}
+
+void APhysicsPuzzleGameCharacter::FreezeItem()
+{
+	if(PhysicsHandlerWeapon)
+	{
+		//PhysicsHandlerWeapon->FreezeObject();
 	}
 }
 

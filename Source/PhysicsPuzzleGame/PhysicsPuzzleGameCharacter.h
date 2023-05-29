@@ -48,6 +48,10 @@ class APhysicsPuzzleGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* ThrowAction;
 
+	/** Freeze Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* FreezeAction;
+
 	
 public:
 	APhysicsPuzzleGameCharacter();
@@ -99,6 +103,9 @@ protected:
 
 	// Calls attached PhysicsHandlerWeapon's Throw
 	void ThrowItem();
+
+	// Calls attached PhysicsHandlerWeapon's Freeze
+	void FreezeItem();
 
 public:
 	/** Returns Mesh1P subobject **/
