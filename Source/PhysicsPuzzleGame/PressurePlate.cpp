@@ -15,7 +15,7 @@ APressurePlate::APressurePlate()
 	ButtonTriggerZone = CreateDefaultSubobject<UBoxComponent>("Box Trigger Zone");
 	ButtonTriggerZone->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	
-	OnActorBeginOverlap.AddDynamic(this, &APressurePlate::OnOverlapBegin);
+
 	
 }
 
@@ -23,6 +23,12 @@ APressurePlate::APressurePlate()
 void APressurePlate::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnActorBeginOverlap.AddDynamic(this, &APressurePlate::OnOverlapBegin);
+	OnActorEndOverlap.AddDynamic(this, &APressurePlate::OnOverlapEnd);
+	
+	bIsPressed = false;
+	
 }
 
 // Called every frame
@@ -36,6 +42,19 @@ void APressurePlate::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 	if(OtherActor->GetComponentByClass<UStaticMeshComponent>()->GetMass() > TriggerMass)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Button Down");
+		bIsPressed = true;
 	}
 }
+
+void APressurePlate::OnOverlapEnd(AActor* OverlappedActor, AActor* OtherActor)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Button Up");
+	bIsPressed = false;
+}
+
+bool APressurePlate::GetIsPressed() const
+{
+	return bIsPressed;
+}
+
 

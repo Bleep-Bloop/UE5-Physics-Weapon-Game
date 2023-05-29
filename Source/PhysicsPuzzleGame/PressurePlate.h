@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
-#include "Engine/TriggerBox.h"
 #include "GameFramework/Actor.h"
 #include "PressurePlate.generated.h"
 
@@ -25,6 +24,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool GetIsPressed() const;
+
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -36,9 +37,15 @@ private:
 	UFUNCTION()
 	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 
+	UFUNCTION()
+	void OnOverlapEnd(class AActor* OverlappedActor, class AActor* OtherActor);
+
 	/**
 	 * @brief Mass of the overlapping actor required to trigger the pressure plate.
 	 */
 	UPROPERTY(EditAnywhere)
 	float TriggerMass;
+
+	UPROPERTY(EditAnywhere)
+	bool bIsPressed;
 };
