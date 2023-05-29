@@ -54,7 +54,22 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float ThrowForce = 150000;
-	
+
+	/**
+	 * @brief Sets frozen objects bSimulatePhysics positive
+	 * @note Called automatically from FreezeObject() after TimeObjectIsFrozen has elapsed.
+	 */
+	void UnFreezeObject();
+
+	// Timer used to handle freeze time
+	FTimerHandle FrozenTimer;
+
+	/**
+	 * @brief Time in seconds a grabbed object will remain frozen in a scene.
+	 */
+	UPROPERTY(EditAnywhere)
+	float TimeObjectIsFrozen;
+
 public:
 
 	// Make friend class
@@ -63,6 +78,12 @@ public:
 	void ReleaseObject() const;
 
 	void ThrowObject() const;
+
+	/**
+	 * @brief Sets grabbed objects bSimulatePhysics negative
+	 * @note automatically calls UnFreezeObject after 'TimeObjectIsFrozen' has elapsed
+	 */
+	void FreezeObject();
 
 
 	

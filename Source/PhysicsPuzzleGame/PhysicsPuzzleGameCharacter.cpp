@@ -152,7 +152,7 @@ void APhysicsPuzzleGameCharacter::FreezeItem()
 {
 	if(PhysicsHandlerWeapon)
 	{
-		//PhysicsHandlerWeapon->FreezeObject();
+		PhysicsHandlerWeapon->FreezeObject();
 	}
 }
 

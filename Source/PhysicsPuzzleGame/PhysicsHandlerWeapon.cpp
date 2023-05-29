@@ -52,7 +52,6 @@ void APhysicsHandlerWeapon::Tick(float DeltaTime)
 	}
 }
 
-
 void APhysicsHandlerWeapon::PickupObject()
 {
 	const FHitResult HitResult = GetFirstPhysicsBodyInReach();
@@ -77,6 +76,13 @@ void APhysicsHandlerWeapon::PickupObject()
 void APhysicsHandlerWeapon::ReleaseObject() const
 {
 	PhysicsHandle->ReleaseComponent();
+	if(ComponentToGrab)
+	{
+		ComponentToGrab->BodyInstance.bLockXTranslation = true;
+		ComponentToGrab->BodyInstance.bLockYTranslation = true;
+		ComponentToGrab->BodyInstance.bLockZTranslation = true;
+	}
+
 }
 
 void APhysicsHandlerWeapon::ThrowObject() const
@@ -87,6 +93,31 @@ void APhysicsHandlerWeapon::ThrowObject() const
 		FVector ThrowVector = PlayerCamera->GetActorForwardVector() * ThrowForce;
 		PhysicsHandle->ReleaseComponent();
 		ComponentToGrab->AddImpulse(ThrowVector, NAME_None, false);
+	}
+}
+
+void APhysicsHandlerWeapon::FreezeObject()
+{
+
+	if(PhysicsHandle->GrabbedComponent)
+	{
+		// Freeze object
+		ComponentToGrab->SetSimulatePhysics(false);
+
+		// Run timer to unfreeze object
+		GetWorldTimerManager().SetTimer(FrozenTimer, this, &APhysicsHandlerWeapon::UnFreezeObject, TimeObjectIsFrozen, false);
+		PhysicsHandle->ReleaseComponent();
+
+	}
+}
+
+// RenameReleaseFrozenObject()?
+void APhysicsHandlerWeapon::UnFreezeObject() 
+{
+	// ToDo: Rework to handle multiple frozen objects
+	if(ComponentToGrab)
+	{
+		ComponentToGrab->SetSimulatePhysics(true);
 	}
 }
 
